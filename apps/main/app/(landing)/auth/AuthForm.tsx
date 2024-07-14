@@ -39,6 +39,7 @@ export function AuthForm() {
                 const response = await signIn("register", { email, password, redirect: false });
                 if (!response?.ok) {
                     toast.error(response?.error);
+                    setLoading(false)
                 } else {
                     router.push("/welcome")
                 }
@@ -46,6 +47,7 @@ export function AuthForm() {
                 const response = await signIn("login", { email, password, redirect: false });
                 if (!response?.ok) {
                     toast.error(response?.error);
+                    setLoading(false)
                 } else {
                     router.push("/dashboard")
                 }

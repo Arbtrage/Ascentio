@@ -1,4 +1,6 @@
+import Sidebar from "../../components/Sidebar";
 import { getSession } from "../../lib/auth";
+import PagesLayout from "../../components/Layout";
 import { NoSession } from "@ui/components/nosession"
 
 export default async function AppLayout({
@@ -9,9 +11,14 @@ export default async function AppLayout({
 
     const session = await getSession();
     if (!session) return <NoSession />
+
+
     return (
-        <>
-            {children}
-        </>
+        <div className="flex flex-row">
+            <Sidebar />
+            <PagesLayout>
+                {children}
+            </PagesLayout>
+        </div>
     );
 }
