@@ -12,6 +12,7 @@ export const metadata: Metadata = {
 };
 
 export default async function WelcomePage() {
+    
     const session = await getSession();
     if (!session) {
         return <NoSession />

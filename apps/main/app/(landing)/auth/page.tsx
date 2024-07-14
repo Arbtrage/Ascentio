@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
+import { getSession } from "../../../lib/auth";
 import { AuthForm } from "./AuthForm";
 import Link from "next/link";
 
@@ -12,6 +13,11 @@ export const metadata: Metadata = {
 };
 
 export default async function AuthenticationPage() {
+
+    const session = await getSession();
+    if (session) {
+        redirect("/dashboard");
+    }
 
     return (
         <div className="flex h-screen flex-col justify-center text-gray-900 duration-500 animate-in fade-in">

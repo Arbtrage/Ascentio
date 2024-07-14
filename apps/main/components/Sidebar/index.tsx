@@ -43,7 +43,7 @@ export default function Sidebar() {
                     <div className="flex flex-col items-center mt-4 space-y-4">
                         <Button
                             variant={"link"}
-                            onClick={() => signOut()}
+                            onClick={async() => await signOut()}
                         >
                             <PiSignOut size={20} />
                         </Button>
