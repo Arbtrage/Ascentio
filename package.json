@@ -8,12 +8,13 @@
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "ui:add": "pnpm --filter ui ui:add",
-    "prisma:generate":"pnpm --filter main generate",
-    "prisma:migrate":"pnpm --filter main  migrate"
+    "prisma:generate": "pnpm --filter main generate",
+    "prisma:migrate": "pnpm --filter main  migrate"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
+    "next": "^14.2.4",
     "prettier": "^3.3.2",
     "turbo": "^2.0.4"
   },
