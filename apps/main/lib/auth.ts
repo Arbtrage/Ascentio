@@ -39,7 +39,6 @@ export const authOptions: NextAuthOptions = {
             authorize: async (credentials: any) => {
                 const email = credentials.email
                 const password = credentials.password;
-
                 try {
                     const user = await prisma.user.findFirst({
                         where: { email }
@@ -54,18 +53,11 @@ export const authOptions: NextAuthOptions = {
                     return Promise.resolve(userData);
                 }
                 catch (error: any) {
-                    if (error.response.status === 400 || error.response.status === 401 || error.response.status === 404 || error.response.status === 422) {
-                        return Promise.reject({
-                            status: error.response.status,
-                            message: error.response.data.detail
-                        });
-                    }
-                    else {
-                        return Promise.reject({
-                            status: 500,
-                            message: error.message
-                        });
-                    }
+                    return Promise.reject({
+                        status: 400,
+                        message: error.message
+                    });
+
                 }
             }
 
@@ -103,18 +95,11 @@ export const authOptions: NextAuthOptions = {
 
                     return Promise.resolve(userData);
                 } catch (error: any) {
-                    if (error.response.status === 400 || error.response.status === 401 || error.response.status === 404 || error.response.status === 422) {
-                        return Promise.reject({
-                            status: error.response.status,
-                            message: error.response.data.detail
-                        });
-                    }
-                    else {
-                        return Promise.reject({
-                            status: 500,
-                            message: error.message
-                        });
-                    }
+                    return Promise.reject({
+                        status: 400,
+                        message: error.message
+                    });
+
                 }
             }
 
@@ -122,7 +107,7 @@ export const authOptions: NextAuthOptions = {
     ],
     cookies: {
         sessionToken: {
-            name: "blip",
+            name: "ascentio",
             options: {
                 httpOnly: true,
                 sameSite: "lax",

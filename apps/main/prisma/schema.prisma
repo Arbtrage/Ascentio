@@ -16,4 +16,5 @@ model User {
   profilePhoto String?
   email        String
   password     String
+  survey       Json?
 }

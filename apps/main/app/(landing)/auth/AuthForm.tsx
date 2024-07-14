@@ -1,37 +1,62 @@
 "use client";
 import { useState } from "react";
 import { Button } from "@ui/components/button"
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 import { Input } from "@ui/components/input"
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
-
-
+import { toast } from "sonner";
 
 export function AuthForm() {
 
-    const [loading, setLoading] = useState(false);
-    const [signup, setSignup] = useState(false);
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("");
     const router = useRouter();
+    const [signup, setSignup] = useState(false)
+    const [loading, setLoading] = useState(false)
 
 
 
-    const handleSubmit = async (e: any) => {
-        e.preventDefault();
-        setLoading(true);
-        if (!signup) {
-            console.log("Logging in with:");
-            await signIn("login", { email: email, password: password });
-            router.push("/en")
-        } else {
-            console.log("Signing up with:");
-            await signIn("register", { email: email, password: password });
-            router.push("/en")
-        }
-    };
+    const formik = useFormik({
+        initialValues: {
+            email: '',
+            password: '',
+        },
+        validationSchema: Yup.object({
+            email: Yup.string()
+                .email('Invalid email address')
+                .required('Email is required'),
+            password: Yup.string()
+                .required('No password provided.')
+                .min(8, 'Password is too short - should be 8 chars minimum.')
+                .matches(/(?=.*[0-9])/, 'Password must contain a number.'),
+        }),
+        onSubmit: async (values) => {
+            setLoading(true)
+            const { email, password } = values;
+            if (signup) {
+                const response = await signIn("register", { email, password, redirect: false });
+                if (!response?.ok) {
+                    toast.error(response?.error);
+                } else {
+                    router.push("/welcome")
+                }
+            } else {
+                const response = await signIn("login", { email, password, redirect: false });
+                if (!response?.ok) {
+                    toast.error(response?.error);
+                } else {
+                    router.push("/dashboard")
+                }
+            }
+        },
+    });
+    const onToggle = () => {
+        setLoading(false);
+        setSignup(!signup)
+        formik.resetForm()
+    }
 
     return (
         <>
@@ -44,60 +69,60 @@ export function AuthForm() {
                         </h1>
                     </div>
                     <div className="mt-8">
-                        <div>
-                            <div className="mt-2">
-                                <div>
-                                    <Input
-                                        id="email"
-                                        name="email"
-                                        type="email"
-                                        autoComplete="email"
-                                        required
-                                        onChange={(e) => setEmail(e.target.value)}
-                                        value={email}
-                                        placeholder="Email"
-                                    />
-                                </div>
-                                <div className="mt-2">
-                                    <Input
-                                        id="password"
-                                        name="password"
-                                        type="password"
-                                        autoComplete="current-password"
-                                        onChange={(e) => setPassword(e.target.value)}
-                                        value={password}
-                                        required
-                                        placeholder="Password"
-                                    />
-                                </div>
-                            </div>
-                        </div>
+                        <form onSubmit={formik.handleSubmit}>
+                            <Input
+                                id="email"
+                                name="email"
+                                type="email"
+                                onChange={formik.handleChange}
+                                value={formik.values.email}
+                                placeholder="Email"
+                                className="mt-2"
+                                required
+                            />
+                            {formik.touched.email && formik.errors.email ? (
+                                <div className="text-red-500 text-xs mt-1">{formik.errors.email}</div>
+                            ) : null}
 
-                        {!signup && <>
+                            <Input
+                                id="password"
+                                name="password"
+                                type="password"
+                                onChange={formik.handleChange}
+                                value={formik.values.password}
+                                placeholder="Password"
+                                className="mt-2"
+                                required
+                            />
+                            {formik.touched.password && formik.errors.password ? (
+                                <div className="text-red-500 text-xs mt-1">{formik.errors.password}</div>
+                            ) : null}
+
+
+                            {!signup && <>
+                                <div className="mt-6">
+                                    <div className="text-sm">
+                                        <a
+                                            href="#"
+                                            className="font-medium text-indigo-600 hover:text-indigo-500"
+                                        >
+                                            Forgot your password?
+                                        </a>
+                                    </div>
+                                </div>
+                            </>}
+
                             <div className="mt-6">
-                                <div className="text-sm">
-                                    <a
-                                        href="#"
-                                        className="font-medium text-indigo-600 hover:text-indigo-500"
-                                    >
-                                        Forgot your password?
-                                    </a>
-                                </div>
+                                <Button
+                                    type="submit"
+                                    className="w-full"
+                                    disabled={loading}
+                                >
+                                    {loading ? "Loading..." : signup ? "Sign Up" : "Sign In"}
+                                </Button>
                             </div>
-                        </>}
 
-                        <div className="mt-6">
-                            <Button
-                                type="submit"
-                                className="w-full"
-                                disabled={loading}
-                                onSubmit={handleSubmit}
-                            >
-                                {loading ? "Loading..." : signup ? "Sign Up" : "Sign In"}
-                            </Button>
-                        </div>
-
-
+                        </form>
 
 
                         {/* Login options with google and github */}
@@ -130,7 +155,7 @@ export function AuthForm() {
                                 <div className="text-sm">
                                     <Button
                                         variant={"link"}
-                                        onClick={() => setSignup(false)}
+                                        onClick={onToggle}
                                         className="font-medium text-indigo-600 hover:text-indigo-500 w-full"
                                     >
                                         Already have an account? Login
@@ -141,7 +166,7 @@ export function AuthForm() {
                             <div className="mt-6 flex items-center justify-center w-full">
                                 <div className="text-sm">
                                     <Button
-                                        onClick={() => setSignup(true)}
+                                        onClick={onToggle}
                                         variant={"link"}
                                         className="font-medium text-indigo-600 hover:text-indigo-500 w-full"
                                     >

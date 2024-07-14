@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 export default async function AuthenticationPage() {
 
     return (
-        <div className="flex h-screen flex-col justify-center text-gray-900">
+        <div className="flex h-screen flex-col justify-center text-gray-900 duration-500 animate-in fade-in">
             <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
                 <div className="flex flex-col text-center mb-5">
                     <h1 className="font-cal text-5xl font-semibold">Ascentio</h1>
