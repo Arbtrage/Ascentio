@@ -1,0 +1,24 @@
+{
+  "name": "indomoviequo",
+  "version": "1.0.0",
+  "private": false,
+  "scripts": {
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "lint": "turbo lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "ui:add": "pnpm --filter ui ui:add",
+    "prisma:generate":"pnpm --filter main generate",
+    "prisma:migrate":"pnpm --filter main  migrate"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "prettier": "^3.3.2",
+    "turbo": "^2.0.4"
+  },
+  "packageManager": "pnpm@9.4.0",
+  "engines": {
+    "node": ">=18"
+  }
+}
