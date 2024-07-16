@@ -34,10 +34,9 @@
     --ring: 222.2 84% 4.9%;
 
     --radius: 0.5rem;
-  }
-}
 
-@layer base {
+  }
+
   * {
     @apply border-border;
     padding: 0;
@@ -57,10 +56,14 @@
   }
 }
 
-.gradient {
-  background-image: conic-gradient(
-    rgb(157, 23, 77),
-    rgb(107, 33, 168),
-    rgb(55, 48, 163)
-  );
+@layer components {
+  .gradient {
+    background-image: conic-gradient(
+      rgb(157, 23, 77),
+      rgb(107, 33, 168),
+      rgb(55, 48, 163)
+    );
+  }
+
+ 
 }

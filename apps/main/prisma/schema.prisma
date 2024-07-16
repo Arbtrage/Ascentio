@@ -11,10 +11,21 @@ datasource db {
 }
 
 model User {
-  id           String  @id @default(uuid())
+  id           String    @id @default(uuid())
   name         String?
   profilePhoto String?
   email        String
   password     String
   survey       Json?
+  Project      Project[]
+}
+
+model Project {
+  id          String @id @default(uuid())
+  name        String
+  description String
+  user        User?  @relation(fields: [userId], references: [id])
+  userId      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
