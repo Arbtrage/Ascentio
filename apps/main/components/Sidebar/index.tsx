@@ -51,7 +51,7 @@ export default function Sidebar() {
               variant={"link"}
               onClick={async () => {
                 await signOut();
-                redirect("/auth");
+                router.push("/auth");
               }}
             >
               <PiSignOut size={20} />

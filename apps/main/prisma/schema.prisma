@@ -20,12 +20,18 @@ model User {
   Project      Project[]
 }
 
+enum ProjectType {
+  ROADMAP
+  WORKFLOW
+}
+
 model Project {
-  id          String @id @default(uuid())
+  id          String      @id @default(uuid())
   name        String
   description String
-  user        User?  @relation(fields: [userId], references: [id])
+  type        ProjectType
+  user        User?       @relation(fields: [userId], references: [id])
   userId      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
 }

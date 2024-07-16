@@ -1,16 +1,20 @@
+"use client";
+
 import {
     Card,
     CardContent,
     CardHeader,
     CardTitle
 } from "@ui/components/card";
+import { useRouter } from "next/navigation";
 
 
 function ProjectsCards({ projects }: any) {
+    const router = useRouter()
     return (
         <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 p-4 animate-fadeIn">
             {projects && projects.map((project: any, index: any) => (
-                <Card key={index} className="w-full cursor-pointer transform transition-transform duration-300 hover:scale-105">
+                <Card key={index} className="w-full cursor-pointer transform transition-transform duration-300 hover:scale-105" onClick={() => router.push(`/projects/${project.id}`)}>
                     <CardHeader>
                         <CardTitle>{project.name}</CardTitle>
                     </CardHeader>

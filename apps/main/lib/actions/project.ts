@@ -2,25 +2,8 @@
 
 import prisma from "../prisma";
 import { getSession } from "../auth";
-import { projectData } from "../../types/project.type";
+import { createProjectData} from "../../types/project.type";
 
-export const createProject = async (data: projectData) => {
-    try {
-        const session = await getSession();
-        if (!session) {
-            throw new Error("Access denied")
-        }
-        await prisma.project.create({
-            data: {
-                ...data,
-                userId: session?.user.id
-            }
-        });
-        return { status: 201, data: "Project Successfully Created" };
-    } catch (error) {
-        return { status: 400, data: error };
-    }
-}
 
 
 export const getAllProjects = async () => {
@@ -56,6 +39,26 @@ export const getProject = async (id: string) => {
             }
         });
         return { status: 200, data: project };
+    } catch (error) {
+        return { status: 400, data: error };
+    }
+}
+
+
+export const createProject = async (data: createProjectData) => {
+    try {
+        const session = await getSession();
+        if (!session) {
+            throw new Error("Access denied")
+        }
+        const project=await prisma.project.create({
+            data: {
+                ...data,
+                type: data.type,
+                userId: session?.user.id
+            }
+        });
+        return { status: 201, data: project };
     } catch (error) {
         return { status: 400, data: error };
     }
