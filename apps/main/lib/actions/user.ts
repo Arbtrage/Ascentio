@@ -17,7 +17,7 @@ export const onboardUser = async (data: OnboardData) => {
 
         const session = await getSession();
         if (!session) {
-            throw new Error("User not found")
+            throw new Error("Access denied")
         }
 
         const user = await prisma.user.findFirst({

@@ -7,7 +7,12 @@ export default function Header() {
     const formatPathname = (path: string) => {
         const paths = path.split("/");
         const pathSegment = paths[paths.length - 1];
+
         if (!pathSegment) return "";
+        if (pathSegment.match(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i)) {
+            return "Canvas"; 
+        }
+
         return pathSegment.charAt(0).toUpperCase() + pathSegment.slice(1);
     };
 

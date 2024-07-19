@@ -80,7 +80,7 @@ export const subLinks: SubLinks = {
                         id: 1,
                         icon: <FaProjectDiagram size={20} />,
                         label: "All Projects",
-                        href: "projects/all",
+                        href: "projects",
                     },
                     {
                         id: 2,
