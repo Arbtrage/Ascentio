@@ -34,7 +34,6 @@
     --ring: 222.2 84% 4.9%;
 
     --radius: 0.5rem;
-
   }
 
   * {
@@ -64,6 +63,27 @@
       rgb(55, 48, 163)
     );
   }
+  .btn,
+  .btn-sm {
+    @apply inline-flex items-center justify-center whitespace-nowrap rounded-lg text-sm font-medium transition-all;
+  }
 
- 
+  .btn {
+    @apply px-4 py-[11px] shadow-lg;
+  }
+
+  .btn-sm {
+    @apply px-3 py-[5px] shadow;
+  }
+
+  /* width */
+  ::-webkit-scrollbar {
+    width: 0px;
+  }
+
+  [data-aos="zoom-y-out"] {
+    transform: scaleX(1.03);
+    opacity: 0;
+    transition-property: transform, opacity;
+  }
 }

@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 import { Button } from "@ui/components/button"
 import { useFormik } from 'formik';
@@ -9,13 +10,16 @@ import { FaGithub } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { toast } from "sonner";
+import { useSearchParams } from "next/navigation";
 
 export function AuthForm() {
-
     const router = useRouter();
-    const [signup, setSignup] = useState(false)
+    const searchParams = useSearchParams();
+    const search = searchParams.get("type");
+    const [signup, setSignup] = useState(search === "register")
     const [loading, setLoading] = useState(false)
 
+    console.log(search)
 
 
     const formik = useFormik({
