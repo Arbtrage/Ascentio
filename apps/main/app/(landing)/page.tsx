@@ -1,11 +1,11 @@
 "use client"
 
-import { useEffect } from "react";
 import { SquaresPattern } from "@ui/components/squares";
+import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import HeroHome from "../../components/Landing/Hero";
-import Header from "../../components/Landing/Header";
+
 import Footer from "../../components/Landing/Footer";
 const page = () => {
   useEffect(() => {
@@ -20,7 +20,6 @@ const page = () => {
   return (
     <>
       <SquaresPattern />
-      <Header />
       <main className="grow">
         <HeroHome />
       </main>

@@ -4,8 +4,9 @@ import { useState, useEffect } from "react";
 
 import Link from "next/link";
 import Image from "next/image";
-
+import { useRouter } from "next/navigation";
 export default function Header() {
+    const router = useRouter();
     const [top, setTop] = useState<boolean>(true);
 
     // detect whether user has scrolled the page down by 10px
@@ -26,11 +27,12 @@ export default function Header() {
                     {/* Site branding */}
                     <div className="flex flex-1 items-center">
                         <Image
-                            src={"/icon.svg"}
+                            src={"/icon.png"}
                             alt="logo"
-                            width={50}
-                            height={50}
+                            width={40}
+                            height={40}
                             className="cursor-pointer"
+                            onClick={() => router.push("/")}
                         />
                     </div>
 
@@ -38,18 +40,10 @@ export default function Header() {
                     <ul className="flex flex-1 items-center justify-end gap-3">
                         <li>
                             <Link
-                                href="/auth"
-                                className="btn-sm bg-white text-gray-800 shadow hover:bg-gray-50"
-                            >
-                                Login
-                            </Link>
-                        </li>
-                        <li>
-                            <Link
-                                href="/auth?type=register"
+                                href="/get-started"
                                 className="btn-sm bg-gray-800 text-gray-200 shadow hover:bg-gray-900"
                             >
-                                Register
+                                Get Started
                             </Link>
                         </li>
                     </ul>

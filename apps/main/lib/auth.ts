@@ -5,6 +5,7 @@ import { Adapter } from "next-auth/adapters";
 import prisma from "./prisma";
 import { getServerSession } from "next-auth/next";
 import bcrypt from "bcrypt";
+import { UserRole } from "@prisma/client";
 
 const saltRounds = 10;
 
@@ -84,6 +85,7 @@ export const authOptions: NextAuthOptions = {
                         data: {
                             email,
                             password: hashedPassword,
+                            role: UserRole.ADMIN
                         }
                     })
 
