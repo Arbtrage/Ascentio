@@ -11,7 +11,7 @@ export default async function middleware(req: NextRequest) {
     let hostname = req.headers
         .get("host")!
         .replace(".localhost:3000", '')
-        .replace(".ascentio.arbtrage.in", '')
+        .replace(".ascentio.xyz", '')
     
     const searchParams = req.nextUrl.searchParams.toString();
     const path = `${url.pathname}${searchParams.length > 0 ? `?${searchParams}` : ""
@@ -19,7 +19,7 @@ export default async function middleware(req: NextRequest) {
 
     if (
         hostname === "localhost:3000" ||
-        hostname === "ascentio.arbtrage.in") {
+        hostname === "ascentio.xyz") {
         const customUrl = new URL(`${path === "/" ? "" : "/get-started"}`, req.url);
         return NextResponse.rewrite(
             customUrl
