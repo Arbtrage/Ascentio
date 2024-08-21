@@ -1,3 +1,5 @@
+import Header from "../../components/Landing/Header";
+
 export default function AppLayout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>;
+  return <><Header />{children}</>;
 }

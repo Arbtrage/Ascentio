@@ -13,7 +13,7 @@ model Organisation {
   description String
   domain      String
   logo        String
-  User        User[]
+  Users        User[]
 }
 
 enum TaskStatus {
