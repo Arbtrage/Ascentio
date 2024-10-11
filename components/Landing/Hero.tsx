@@ -1,4 +1,3 @@
-import Image from "next/image";
 import PageIllustration from "./Illustration";
 
 export default function HeroHome() {
@@ -20,7 +19,7 @@ export default function HeroHome() {
               data-aos="zoom-y-out"
               data-aos-delay={150}
             >
-              The project management tool you're <br className="max-lg:hidden" />
+              The project management tool you&nbsp;re <br className="max-lg:hidden" />
               looking for
             </h1>
             <div className="mx-auto max-w-3xl">
@@ -65,7 +64,7 @@ export default function HeroHome() {
             data-aos="zoom-y-out"
             data-aos-delay={600}
           >
-            
+
           </div>
         </div>
       </div>

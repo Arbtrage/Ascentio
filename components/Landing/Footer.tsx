@@ -1,4 +1,4 @@
-export default function Footer({ border = false }: { border?: boolean }) {
+export default function Footer() {
     return (
         <footer>
 

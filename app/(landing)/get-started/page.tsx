@@ -1,6 +1,4 @@
 "use client";
-
-import React from "react";
 import { useEffect, useState } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -10,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { List } from "@/components/Misc/List";
 import SignUp from "./signUp";
 
-const GetStarted = () => {
+export default function GetStarted(){
     const [step, setStep] = useState(0);
 
     useEffect(() => {
@@ -76,5 +74,3 @@ const GetStarted = () => {
         </main>
     );
 };
-
-export default GetStarted;

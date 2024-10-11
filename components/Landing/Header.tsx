@@ -9,8 +9,12 @@ import { useRouter } from "next/navigation";
 export default function Header() {
     const router = useRouter();
     const [top, setTop] = useState<boolean>(true);
-    const scrollHandler = () => {
-        window.pageYOffset > 10 ? setTop(false) : setTop(true);
+    const scrollHandler = (): void => {
+        if (window.pageYOffset > 10) {
+            setTop(false);
+        } else {
+            setTop(true);
+        }
     };
 
     useEffect(() => {

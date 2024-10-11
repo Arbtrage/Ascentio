@@ -1,10 +1,4 @@
 import MainLayout from "@/components/Layouts/mainLayout";
-interface siteData {
-    name: string;
-    description: string;
-    image: string;
-    logo: string;
-}
 
 interface Props {
     params: {
@@ -24,10 +18,8 @@ export async function generateMetadata({ params }: Props) {
 }
 
 export default async function RootLayout({
-    params,
     children,
 }: {
-    params: { domain: string };
     children: React.ReactNode;
 }) {
     return (

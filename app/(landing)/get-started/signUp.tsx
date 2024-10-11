@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useEffect, useState, useRef } from "react";
+import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { Card } from "@/components/ui/card";
@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { CalendarIcon, Check, MoveRight, PhoneCall } from "lucide-react";
+import {Check, MoveRight } from "lucide-react";
 
 const SignUp = () => {
     useEffect(() => {
@@ -88,7 +88,7 @@ const SignUp = () => {
                                 <Input type="text" />
                             </div>
                             <Button className="gap-4 w-full">
-                                Let's build something crazy <MoveRight className="w-4 h-4" />
+                                Let&apos;s build something crazy <MoveRight className="w-4 h-4" />
                             </Button>
                         </div>
                     </div>

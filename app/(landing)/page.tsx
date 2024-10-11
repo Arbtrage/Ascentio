@@ -7,7 +7,7 @@ import HeroHome from "@/components/Landing/Hero";
 import Footer from "@/components/Landing/Footer";
 
 
-const page = () => {
+export default function Landing(){
   useEffect(() => {
     AOS.init({
       once: true,
@@ -27,5 +27,3 @@ const page = () => {
     </>
   )
 }
-
-export default page

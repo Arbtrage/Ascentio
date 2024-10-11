@@ -5,6 +5,7 @@ interface Props {
 }
 
 export default async function Home({ params }: Props) {
+    console.log(params);
     return (
         <>
             <h1>Page</h1>
