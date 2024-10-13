@@ -6,7 +6,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { List } from "@/components/Misc/List";
-import SignUp from "./signUp";
+import SignUp from "./getStartedClient";
 
 export default function GetStarted(){
     const [step, setStep] = useState(0);

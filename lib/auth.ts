@@ -4,8 +4,9 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import { Adapter } from "next-auth/adapters";
 import prisma from "./prisma";
 import { getServerSession } from "next-auth/next";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { Role } from "@prisma/client";
+import { addMember } from "./actions/organisation";
 
 const saltRounds = 10;
 
@@ -67,12 +68,14 @@ export const authOptions: NextAuthOptions = {
             credentials: {
                 email: { label: "Email", type: "email" },
                 password: { label: "Password", type: "password" },
-                name: { label: "Name", type: "text" }
+                name: { label: "Name", type: "text" },
+                domain: { label: "Domain", type: "text" }
             },
             authorize: async (credentials: any) => {
                 const email = credentials.email
                 const password = credentials.password;
-                const name = credentials.name
+                const name = credentials.name;
+                const domain = credentials.domain;
 
                 try {
                     const isUser = await prisma.user.findFirst({
@@ -92,6 +95,7 @@ export const authOptions: NextAuthOptions = {
                         }
                     })
 
+                    await addMember(domain, user.id);
                     const userData = {
                         id: user.id,
                         email: user.email,

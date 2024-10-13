@@ -21,12 +21,16 @@ model User {
   avatar         String?
   Organisation   Organisation? @relation(fields: [organisationId], references: [id])
   organisationId String?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @default(now()) @updatedAt
 }
 
 model Organisation {
-  id     String  @id @default(uuid())
-  name   String
-  domain String?
-  logo   String?
-  users  User[]
+  id        String   @id @default(uuid())
+  name      String
+  domain    String?  @unique
+  logo      String?
+  users     User[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 }

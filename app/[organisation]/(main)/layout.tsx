@@ -1,7 +1,7 @@
 import MainLayout from "@/components/Layouts/mainLayout";
 import { getSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
-
+import { getOrganisation } from "@/lib/actions/organisation";
 
 interface Props {
     params: {
@@ -10,9 +10,10 @@ interface Props {
 }
 
 export async function generateMetadata({ params }: Props) {
-    const name = params.organisation
+    const name = params.organisation;
+    const organisation = await getOrganisation(name);
     return {
-        title: name,
+        title: organisation?.name || "Multipartner Site",
         description: "Multipartner Site",
         icons: {
             icon: './icon.png'
@@ -31,9 +32,8 @@ export default async function RootLayout({
 }) {
 
     const session = await getSession();
-    console.log(session)
     if (!session) {
-        redirect('/get-started');
+        redirect('/auth');
     }
 
     return (

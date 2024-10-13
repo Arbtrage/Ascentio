@@ -1,4 +1,4 @@
-import { Bell,Search } from "lucide-react"
+import { Bell, Search } from "lucide-react"
 import Link from "next/link"
 
 import { Button } from "@/components/ui/button"
@@ -53,14 +53,6 @@ export default function Header() {
                         <UserNav />
                     </nav>
                 </div>
-                {/* <Button
-                    variant="ghost"
-                    className="flex md:hidden"
-                    size="icon"
-                >
-                    <Menu className="h-4 w-4" />
-                    <span className="sr-only">Toggle menu</span>
-                </Button> */}
             </div>
         </header>
     )

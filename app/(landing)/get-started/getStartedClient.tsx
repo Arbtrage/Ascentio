@@ -9,8 +9,11 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
+import { createOrganisation } from "@/lib/actions/organisation";
 import { Check } from "lucide-react";
+import validator from "validator";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const SignUp = () => {
     useEffect(() => {
@@ -24,6 +27,22 @@ const SignUp = () => {
 
     const router = useRouter();
     const [orgName, setOrgName] = useState<string>("")
+    const formatOrgName = (name: string) => {
+        let formattedName = name.toLowerCase();
+        formattedName = formattedName.replace(/\s+/g, '');
+        formattedName = validator.whitelist(formattedName, "a-z");
+        return formattedName;
+    };
+
+    async function createOrg() {
+        const domain = formatOrgName(orgName);
+        try {
+            await createOrganisation(orgName, domain);
+            router.push(`${process.env.NEXT_PUBLIC_PROTOCOL}://${orgName}.${process.env.NEXT_PUBLIC_URL}/onboarding`)
+        } catch (error) {
+            toast.error("An error occurred. Please try again.");
+        }
+    }
 
     return (
         <Card
@@ -42,11 +61,6 @@ const SignUp = () => {
                                 <h4 className="text-3xl md:text-5xl tracking-tighter max-w-xl text-left font-regular">
                                     Get started in 3 easy steps
                                 </h4>
-                                {/* <p className="text-lg leading-relaxed tracking-tight text-muted-foreground max-w-sm text-left">
-                                    Managing a small business today is already tough. Avoid
-                                    further complications by ditching outdated, tedious trade
-                                    methods.
-                                </p> */}
                             </div>
                         </div>
                         <div className="flex flex-row gap-6 items-start text-left">
@@ -89,7 +103,7 @@ const SignUp = () => {
                                 value={orgName}
                                 onChange={(e) => setOrgName(e.target.value)}
                             />
-                            <Button type="submit" onClick={() => { router.push(`${process.env.NEXT_PUBLIC_PROTOCOL}://${orgName}.${process.env.NEXT_PUBLIC_URL}/onboarding`) }}>Get Started</Button>
+                            <Button type="submit" onClick={() => createOrg()}>Get Started</Button>
                         </div>
                     </div>
                 </div>

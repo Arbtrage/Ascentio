@@ -1,16 +1,24 @@
-import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { getOrganisation } from "@/lib/actions/organisation";
 
 const inter = Inter({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-    title: "Onboarding page",
-    description: "",
-    icons: {
-        icon: "/icon.png",
-    },
-
-};
+interface Props {
+    params: {
+        organisation: string;
+    };
+}
+export async function generateMetadata({ params }: Props) {
+    const name = params.organisation;
+    const organisation = await getOrganisation(name);
+    
+    return {
+        title: organisation?.name || "Multipartner Site",
+        description: "Multipartner Site",
+        icons: {
+            icon: './icon.png'
+        },
+    };
+}
 
 export default function OnboardingLayout({
     children,
