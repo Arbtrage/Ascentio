@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { Card } from "@/components/ui/card";
@@ -9,7 +9,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import {Check, MoveRight } from "lucide-react";
+import { Check } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const SignUp = () => {
     useEffect(() => {
@@ -20,6 +21,9 @@ const SignUp = () => {
             easing: "ease-out-cubic",
         });
     }, []);
+
+    const router = useRouter();
+    const [orgName, setOrgName] = useState<string>("")
 
     return (
         <Card
@@ -36,19 +40,19 @@ const SignUp = () => {
                             </div>
                             <div className="flex flex-col gap-2">
                                 <h4 className="text-3xl md:text-5xl tracking-tighter max-w-xl text-left font-regular">
-                                    Something new
+                                    Get started in 3 easy steps
                                 </h4>
-                                <p className="text-lg leading-relaxed tracking-tight text-muted-foreground max-w-sm text-left">
+                                {/* <p className="text-lg leading-relaxed tracking-tight text-muted-foreground max-w-sm text-left">
                                     Managing a small business today is already tough. Avoid
                                     further complications by ditching outdated, tedious trade
                                     methods.
-                                </p>
+                                </p> */}
                             </div>
                         </div>
                         <div className="flex flex-row gap-6 items-start text-left">
                             <Check className="w-4 h-4 mt-2 text-primary" />
                             <div className="flex flex-col gap-1">
-                                <p>Easy to use</p>
+                                <p>Add Organisation</p>
                                 <p className="text-muted-foreground text-sm">
                                     We&apos;ve made it easy to use and understand.
                                 </p>
@@ -57,7 +61,7 @@ const SignUp = () => {
                         <div className="flex flex-row gap-6 items-start text-left">
                             <Check className="w-4 h-4 mt-2 text-primary" />
                             <div className="flex flex-col gap-1">
-                                <p>Fast and reliable</p>
+                                <p>Create an account</p>
                                 <p className="text-muted-foreground text-sm">
                                     We&apos;ve made it easy to use and understand.
                                 </p>
@@ -66,7 +70,7 @@ const SignUp = () => {
                         <div className="flex flex-row gap-6 items-start text-left">
                             <Check className="w-4 h-4 mt-2 text-primary" />
                             <div className="flex flex-col gap-1">
-                                <p>Beautiful and modern</p>
+                                <p>Add Team Members</p>
                                 <p className="text-muted-foreground text-sm">
                                     We&apos;ve made it easy to use and understand.
                                 </p>
@@ -75,21 +79,17 @@ const SignUp = () => {
                     </div>
                     <div className="justify-center flex items-center">
                         <div className="rounded-md w-full p-4 flex flex-col border gap-4">
-                            <div className="grid w-full min-w-md items-center gap-1">
-                                <Label>Email</Label>
-                                <Input type="email" />
-                            </div>
-                            <div className="grid w-full min-w-md items-center gap-1">
-                                <Label >Password</Label>
-                                <Input type="password" />
-                            </div>
-                            <div className="grid w-full min-w-md items-center gap-1">
-                                <Label >Organisation Name</Label>
-                                <Input type="text" />
-                            </div>
-                            <Button className="gap-4 w-full">
-                                Let&apos;s build something crazy <MoveRight className="w-4 h-4" />
-                            </Button>
+                            <Label htmlFor="name">Organisation Name</Label>
+                            <Input
+                                id="orgName"
+                                placeholder="Enter your Organisation"
+                                type="text"
+                                name="name"
+                                required
+                                value={orgName}
+                                onChange={(e) => setOrgName(e.target.value)}
+                            />
+                            <Button type="submit" onClick={() => { router.push(`${process.env.NEXT_PROTOCOL}://${orgName}.${process.env.NEXT_URL}/onboarding`) }}>Get Started</Button>
                         </div>
                     </div>
                 </div>

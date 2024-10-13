@@ -1,4 +1,5 @@
 import PageIllustration from "./Illustration";
+import Footer from "./Footer";
 
 export default function HeroHome() {
   return (

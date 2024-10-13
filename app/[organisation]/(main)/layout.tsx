@@ -1,4 +1,7 @@
 import MainLayout from "@/components/Layouts/mainLayout";
+import { getSession } from "@/lib/auth";
+import { redirect } from "next/navigation";
+
 
 interface Props {
     params: {
@@ -19,17 +22,24 @@ export async function generateMetadata({ params }: Props) {
 
 export default async function RootLayout({
     children,
+    params
 }: {
     children: React.ReactNode;
+    params: {
+        organisation: string;
+    }
 }) {
+
+    const session = await getSession();
+    console.log(session)
+    if (!session) {
+        redirect('/get-started');
+    }
+
     return (
-        <html lang="en">
-            <body>
-                <MainLayout>
-                    {children}
-                </MainLayout>
-            </body>
-        </html>
+        <MainLayout>
+            {children}
+        </MainLayout>
     );
 }
 
