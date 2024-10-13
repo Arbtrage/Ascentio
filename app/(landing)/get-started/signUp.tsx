@@ -89,7 +89,7 @@ const SignUp = () => {
                                 value={orgName}
                                 onChange={(e) => setOrgName(e.target.value)}
                             />
-                            <Button type="submit" onClick={() => { router.push(`${process.env.NEXT_PROTOCOL}://${orgName}.${process.env.NEXT_URL}/onboarding`) }}>Get Started</Button>
+                            <Button type="submit" onClick={() => { router.push(`${process.env.NEXT_PUBLIC_PROTOCOL}://${orgName}.${process.env.NEXT_PUBLIC_URL}/onboarding`) }}>Get Started</Button>
                         </div>
                     </div>
                 </div>
