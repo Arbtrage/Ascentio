@@ -3,6 +3,7 @@ import { getSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { getOrganisation } from "@/lib/actions/organisation";
 
+
 interface Props {
     params: {
         organisation: string;

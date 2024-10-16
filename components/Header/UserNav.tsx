@@ -11,6 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import Link from "next/link";
 import { getSession } from "@/lib/auth";
 import { signOut } from "next-auth/react";
 
@@ -42,15 +43,17 @@ export function UserNav({ session }: any) {
 
         {isAdmin && (
           <>
-            <DropdownMenuGroup>
-              <DropdownMenuItem className="cursor-pointer flex flex-col items-start">
-                Admin center
-                <p className="text-xs leading-none text-muted-foreground">
-                  Manage admin settings
-                </p>
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
+            <Link href="/admin">
+              <DropdownMenuGroup>
+                <DropdownMenuItem className="cursor-pointer flex flex-col items-start">
+                  Admin center
+                  <p className="text-xs leading-none text-muted-foreground">
+                    Manage admin settings
+                  </p>
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
+              <DropdownMenuSeparator />
+            </Link>
           </>
         )}
 

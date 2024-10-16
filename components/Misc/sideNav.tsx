@@ -13,43 +13,41 @@ import {
 import Link from "next/link";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { cn } from "@/lib/utils";
-import Header from "../Header";
 import TeamSwitcher from "../Layouts/TeamSwitcher";
 
 export default function SideNav() {
     const links = [
         {
             label: "Dashboard",
-            href: "#",
+            href: "/",
             icon: (
                 <IconBrandTabler className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
             ),
         },
         {
             label: "Stories",
-            href: "#",
+            href: "/stories",
             icon: (
                 <IconLayoutKanbanFilled className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
             ),
         },
         {
             label: "Iterations",
-            href: "#",
+            href: "/iterations",
             icon: (
                 <IconReload className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
             ),
         },
         {
             label: "Epics",
-            href: "#",
+            href: "/epics",
             icon: (
                 <IconDirectionsFilled className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
             ),
         },
         {
             label: "Docs",
-            href: "#",
+            href: "/docs",
             icon: (
                 <IconReport className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
             ),
@@ -77,7 +75,7 @@ export default function SideNav() {
 export const Logo = () => {
     return (
         <Link
-            href="#"
+            href="/"
             className="font-normal flex space-x-2 items-center text-sm text-black py-1 relative z-20"
         >
             <Image
@@ -99,7 +97,7 @@ export const Logo = () => {
 export const LogoIcon = () => {
     return (
         <Link
-            href="#"
+            href="/"
         >
             <Image
                 src="/icon.png"

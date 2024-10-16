@@ -65,7 +65,8 @@ export const authOptions: NextAuthOptions = {
                         id: user.id,
                         email: user.email,
                         name: user.name,
-                        role: user.role
+                        role: user.role,
+                        domain: domain
                     }
                     return Promise.resolve(userData);
                 }
@@ -117,7 +118,8 @@ export const authOptions: NextAuthOptions = {
                         id: user.id,
                         email: user.email,
                         name: user.name,
-                        role: user.role
+                        role: user.role,
+                        domain: domain
                     }
 
                     return Promise.resolve(userData);

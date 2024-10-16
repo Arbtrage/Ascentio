@@ -1,9 +1,6 @@
 "use client";
 
-import React from 'react'
 import Image from "next/image"
-import Link from "next/link"
-
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -12,6 +9,8 @@ import * as Yup from "yup";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
+import { fetcher } from "@/lib/utils";
+import useSWR from 'swr';
 import { MoveRight } from "lucide-react";
 
 const signInSchema = Yup.object().shape({
@@ -23,8 +22,9 @@ const signInSchema = Yup.object().shape({
     .required("Password is required"),
 });
 
-const page = ({ params }: { params: { organisation: string } }) => {
+const AuthPage = ({ params }: { params: { organisation: string } }) => {
   const router = useRouter();
+  const { data, error, isLoading } = useSWR(`/api/sites?id=${params.organisation}`, fetcher);
 
   const handleSubmit = async (values: any, { setSubmitting }: any) => {
     try {
@@ -47,13 +47,28 @@ const page = ({ params }: { params: { organisation: string } }) => {
     }
   };
 
+  if (error) {
+    console.error(error);
+  }
+
+  if (data) console.log(data)
+
 
   return (
     <div className="w-full lg:grid min-h-screen lg:grid-cols-2 ">
       <div className="flex items-center justify-center py-12">
         <div className="mx-auto grid w-[350px] gap-6">
           <div className="grid gap-2 text-center">
-            <h1 className="text-3xl font-bold">Login</h1>
+            {!isLoading && (
+              <div className="flex flex-col items-center justify-center">
+                <Image
+                  src={data.logo || "/icon.png"}
+                  alt="logo"
+                  width={200}
+                  height={200}
+                />
+                <h1 className="text-3xl font-bold">{data.name || "Login"}</h1></div>
+            )}
             <p className="text-balance text-muted-foreground">
               Enter your email below to login to your account
             </p>
@@ -122,4 +137,4 @@ const page = ({ params }: { params: { organisation: string } }) => {
   )
 }
 
-export default page
+export default AuthPage

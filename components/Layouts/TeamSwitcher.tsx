@@ -46,33 +46,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-
-const groups = [
-    {
-        label: "Personal Account",
-        teams: [
-            {
-                label: "Alicia Koch",
-                value: "personal",
-            },
-        ],
-    },
-    {
-        label: "Teams",
-        teams: [
-            {
-                label: "Acme Inc.",
-                value: "acme-inc",
-            },
-            {
-                label: "Monsters Inc.",
-                value: "monsters",
-            },
-        ],
-    },
-]
-
-type Team = (typeof groups)[number]["teams"][number]
+import { useTeam } from "@/contexts/TeamContext";
 
 type PopoverTriggerProps = React.ComponentPropsWithoutRef<typeof PopoverTrigger>
 
@@ -80,10 +54,11 @@ interface TeamSwitcherProps extends PopoverTriggerProps { }
 
 export default function TeamSwitcher({ className }: TeamSwitcherProps) {
     const [open, setOpen] = React.useState(false)
+
     const [showNewTeamDialog, setShowNewTeamDialog] = React.useState(false)
-    const [selectedTeam, setSelectedTeam] = React.useState<Team>(
-        groups[0].teams[0]
-    )
+
+    const { setTeamName, allTeams, teamName } = useTeam();
+
 
     return (
         <Dialog open={showNewTeamDialog} onOpenChange={setShowNewTeamDialog}>
@@ -98,13 +73,13 @@ export default function TeamSwitcher({ className }: TeamSwitcherProps) {
                     >
                         <Avatar className="mr-2 h-5 w-5">
                             <AvatarImage
-                                src={`https://avatar.vercel.sh/${selectedTeam.value}.png`}
-                                alt={selectedTeam.label}
+                                src={`https://avatar.vercel.sh/${teamName}.png`}
+                                alt={teamName}
                                 className="grayscale"
                             />
                             <AvatarFallback>SC</AvatarFallback>
                         </Avatar>
-                        {selectedTeam.label}
+                        {teamName}
                         <CaretSortIcon className="ml-auto h-4 w-4 shrink-0 opacity-50" />
                     </Button>
                 </PopoverTrigger>
@@ -113,13 +88,13 @@ export default function TeamSwitcher({ className }: TeamSwitcherProps) {
                         <CommandInput placeholder="Search team..." />
                         <CommandList>
                             <CommandEmpty>No team found.</CommandEmpty>
-                            {groups.map((group) => (
+                            {allTeams.map((group: any) => (
                                 <CommandGroup key={group.label} heading={group.label}>
-                                    {group.teams.map((team) => (
+                                    {group.teams.map((team: any) => (
                                         <CommandItem
                                             key={team.value}
                                             onSelect={() => {
-                                                setSelectedTeam(team)
+                                                setTeamName(team.label)
                                                 setOpen(false)
                                             }}
                                             className="text-sm"
@@ -136,7 +111,7 @@ export default function TeamSwitcher({ className }: TeamSwitcherProps) {
                                             <CheckIcon
                                                 className={cn(
                                                     "ml-auto h-4 w-4",
-                                                    selectedTeam.value === team.value
+                                                    teamName === team.label
                                                         ? "opacity-100"
                                                         : "opacity-0"
                                                 )}
