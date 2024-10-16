@@ -19,10 +19,61 @@ model User {
   role           Role
   password       String
   avatar         String?
+  roles          UserRole[]    @relation("UserRoles")
   Organisation   Organisation? @relation(fields: [organisationId], references: [id])
   organisationId String?
   createdAt      DateTime      @default(now())
   updatedAt      DateTime      @default(now()) @updatedAt
+  Projects       Projects[]
+}
+
+model RoleEntity {
+  id          String      @id @default(uuid())
+  name        String      @unique
+  description String?
+  scopes      RoleScope[] @relation("RoleScopes")
+  userRoles   UserRole[]  @relation("UserRoles")
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model Scope {
+  id          String      @id @default(uuid())
+  name        String      @unique
+  description String?
+  roleScopes  RoleScope[] @relation("RoleScopes")
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model RoleScope {
+  id      String     @id @default(uuid())
+  roleId  String
+  role    RoleEntity @relation("RoleScopes", fields: [roleId], references: [id])
+  scopeId String
+  scope   Scope      @relation("RoleScopes", fields: [scopeId], references: [id])
+}
+
+model UserRole {
+  id         String     @id @default(uuid())
+  userId     String
+  user       User       @relation("UserRoles", fields: [userId], references: [id])
+  roleId     String
+  role       RoleEntity @relation("UserRoles", fields: [roleId], references: [id])
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  Projects   Projects?  @relation(fields: [projectsId], references: [id])
+  projectsId String?
+}
+
+model Projects {
+  id        String     @id @default(uuid())
+  name      String
+  admin     User       @relation(fields: [adminId], references: [id])
+  member    UserRole[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @default(now()) @updatedAt
+  adminId   String
 }
 
 model Organisation {

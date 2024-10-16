@@ -4,8 +4,10 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { UserNav } from "./UserNav"
+import { getSession } from "@/lib/auth";
 
-export default function Header() {
+export default async function Header() {
+    const session = await getSession();
     return (
         <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
             <div className="px-5 flex h-16 items-center space-x-4 justify-between">
@@ -50,7 +52,7 @@ export default function Header() {
                             <Bell className="h-4 w-4" />
                             <span className="sr-only">Notifications</span>
                         </Button>
-                        <UserNav />
+                        <UserNav session={session} />
                     </nav>
                 </div>
             </div>

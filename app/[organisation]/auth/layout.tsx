@@ -7,6 +7,7 @@ interface Props {
         organisation: string;
     };
 }
+
 export async function generateMetadata({ params }: Props) {
     const name = params.organisation;
     const organisation = await getOrganisation(name);

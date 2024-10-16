@@ -1,3 +1,5 @@
+"use client";
+
 import { User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,10 +12,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { getSession } from "@/lib/auth";
+import { signOut } from "next-auth/react";
 
-export async function UserNav() {
-
-  const session = await getSession();
+export function UserNav({ session }: any) {
   const isAdmin = session?.user.role === "ADMIN";
 
   return (
@@ -62,7 +63,7 @@ export async function UserNav() {
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="text-red-600 cursor-pointer">
+        <DropdownMenuItem className="text-red-600 cursor-pointer" onClick={() => signOut()}>
           Log out
         </DropdownMenuItem>
       </DropdownMenuContent>
