@@ -15,7 +15,7 @@ const SubNav = () => {
     return (
         <div className="flex gap-6 md:gap-10">
             <Link href={data.href} className="flex items-center space-x-2">
-                <span className="inline-block font-bold">{data.name}</span>
+                <span className="inline-block text-xl font-bold">{data.name}</span>
             </Link>
             <nav className="hidden gap-6 md:flex">
                 {data.links && data.links.map((link) => (

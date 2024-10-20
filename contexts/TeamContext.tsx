@@ -55,21 +55,25 @@ export const TeamProvider = ({ children }: TeamProviderProps) => {
             ],
         },
     ];
+
     const [teamName, setTeamName] = useState<string>(() => {
-        const storedTeamName = localStorage.getItem('teamName');
-        return storedTeamName !== null ? storedTeamName : allTeams[0].teams[0].label;
+        if (typeof window !== "undefined") {  // Check if window object is available
+            const storedTeamName = localStorage.getItem('teamName');
+            return storedTeamName !== null ? storedTeamName : allTeams[0].teams[0].label;
+        }
+        return allTeams[0].teams[0].label;  // Default value when not on client-side
     });
 
-
-    // Effect to update localStorage when teamName changes
     useEffect(() => {
-        localStorage.setItem('teamName', teamName);
+        if (typeof window !== "undefined") {
+            localStorage.setItem('teamName', teamName);
+        }
     }, [teamName]);
 
     const value = {
         teamName,
         setTeamName,
-        allTeams // Adding the allTeams to the context value
+        allTeams
     };
 
     return <TeamContext.Provider value={value}>{children}</TeamContext.Provider>;

@@ -17,10 +17,10 @@ export default function MainLayout({
             )}>
                 <TeamProvider>
                     <SideNav />
-                    <div className="relative flex flex-1 flex-col">
+                    <div className="relative flex flex-1 flex-col overflow-y-auto">
                         <main>
                             <Header />
-                            <div className="bg-white w-full p-4">
+                            <div className="bg-gradient-to-br from-gray-50 to-gray-100 w-full overflow-y-auto">
                                 {children}
                             </div>
                         </main>

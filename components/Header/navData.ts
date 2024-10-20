@@ -15,14 +15,15 @@ export const pagesData: PageData = {
         name: "Ascentio",
         href: "/",
     },
+    stories: {
+        name: "Stories",
+        href: "/stories",
+    },
     admin: {
         name: "Ascentio Admin",
         href: "/admin",
         links: [
-            {
-                name: "Overview",
-                href: "/admin/overview",
-            },
+
             {
                 name: "Users",
                 href: "/admin/users",
@@ -34,6 +35,10 @@ export const pagesData: PageData = {
             {
                 name: "Teams",
                 href: "/admin/teams",
+            },
+            {
+                name: "Settings",
+                href: "/admin/settings",
             },
         ]
     }

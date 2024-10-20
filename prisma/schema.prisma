@@ -8,7 +8,7 @@ datasource db {
 }
 
 enum Role {
-  USER
+  MEMBER
   ADMIN
 }
 
@@ -16,7 +16,7 @@ model User {
   id             String        @id @default(uuid())
   name           String
   email          String
-  role           Role
+  role           Role          @default(MEMBER)
   password       String
   avatar         String?
   roles          UserRole[]    @relation("UserRoles")
@@ -27,52 +27,20 @@ model User {
   Projects       Projects[]
 }
 
-model RoleEntity {
-  id          String      @id @default(uuid())
-  name        String      @unique
-  description String?
-  scopes      RoleScope[] @relation("RoleScopes")
-  userRoles   UserRole[]  @relation("UserRoles")
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-}
-
-model Scope {
-  id          String      @id @default(uuid())
-  name        String      @unique
-  description String?
-  roleScopes  RoleScope[] @relation("RoleScopes")
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-}
-
-model RoleScope {
-  id      String     @id @default(uuid())
-  roleId  String
-  role    RoleEntity @relation("RoleScopes", fields: [roleId], references: [id])
-  scopeId String
-  scope   Scope      @relation("RoleScopes", fields: [scopeId], references: [id])
-}
-
 model UserRole {
-  id         String     @id @default(uuid())
-  userId     String
-  user       User       @relation("UserRoles", fields: [userId], references: [id])
-  roleId     String
-  role       RoleEntity @relation("UserRoles", fields: [roleId], references: [id])
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
-  Projects   Projects?  @relation(fields: [projectsId], references: [id])
-  projectsId String?
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation("UserRoles", fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Projects {
-  id        String     @id @default(uuid())
+  id        String   @id @default(uuid())
   name      String
-  admin     User       @relation(fields: [adminId], references: [id])
-  member    UserRole[]
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @default(now()) @updatedAt
+  admin     User     @relation(fields: [adminId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
   adminId   String
 }
 
