@@ -7,6 +7,7 @@ import { getServerSession } from "next-auth/next";
 import bcrypt from "bcryptjs";
 import { Role } from "@prisma/client";
 import { addMember } from "./actions/organisation";
+import sendEmail from "./actions/email";
 
 const saltRounds = 10;
 
@@ -61,6 +62,7 @@ export const authOptions: NextAuthOptions = {
                     if (!user) throw new Error("User not found");
                     if (domain !== user?.Organisation?.domain) throw new Error("Incorrect domain");
                     if (bcrypt.compareSync(password, user.password) === false) throw new Error("Incorrect password");
+                    await sendEmail({ userFirstname: user.name, email: user.email });
                     const userData = {
                         id: user.id,
                         email: user.email,

@@ -15,41 +15,86 @@ enum Role {
 model User {
   id             String        @id @default(uuid())
   name           String
-  email          String
+  email          String        @unique
   role           Role          @default(MEMBER)
+  position       String?
   password       String
   avatar         String?
-  roles          UserRole[]    @relation("UserRoles")
   Organisation   Organisation? @relation(fields: [organisationId], references: [id])
   organisationId String?
   createdAt      DateTime      @default(now())
   updatedAt      DateTime      @default(now()) @updatedAt
-  Projects       Projects[]
+  Projects       Project[]     @relation("ProjectUsers")
+  assignedTasks  Task[]        @relation("TaskAssignedUsers")
+  ownedTasks     Task[]        @relation("TaskOwner")
+  Teams          Team[]        @relation("UserTeams")
+  UserTeam       UserTeam[]
 }
 
-model UserRole {
-  id        String   @id @default(uuid())
-  userId    String
-  user      User     @relation("UserRoles", fields: [userId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model Team {
+  id             String        @id @default(uuid())
+  name           String
+  description    String
+  organisation   Organisation? @relation(fields: [organisationId], references: [id])
+  organisationId String?
+  users          User[]        @relation("UserTeams")
+  Tasks          Task[]
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @default(now()) @updatedAt
+  UserTeam       UserTeam[]
 }
 
-model Projects {
-  id        String   @id @default(uuid())
-  name      String
-  admin     User     @relation(fields: [adminId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
-  adminId   String
+model UserTeam {
+  userId String
+  teamId String
+  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Team   Team   @relation(fields: [teamId], references: [id], onDelete: Cascade)
+
+  @@id([userId, teamId])
+}
+
+model Project {
+  id             String        @id @default(uuid())
+  name           String
+  description    String
+  organisation   Organisation? @relation(fields: [organisationId], references: [id])
+  organisationId String?
+  users          User[]        @relation("ProjectUsers")
+  tasks          Task[]
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @default(now()) @updatedAt
+  adminId        String
+}
+
+model Task {
+  id            String    @id @default(uuid())
+  name          String
+  subContent    String?
+  mainContent   String?
+  owner         User      @relation("TaskOwner", fields: [ownerId], references: [id])
+  ownerId       String
+  assignedUsers User[]    @relation("TaskAssignedUsers")
+  project       Project   @relation(fields: [projectId], references: [id])
+  projectId     String
+  startedAt     DateTime? @default(now())
+  finishedAt    DateTime?
+  metaInfo      Json?
+  status        String
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @default(now()) @updatedAt
+  Team          Team?     @relation(fields: [teamId], references: [id])
+  teamId        String?
 }
 
 model Organisation {
-  id        String   @id @default(uuid())
+  id        String    @id @default(uuid())
   name      String
-  domain    String?  @unique
+  domain    String?   @unique
+  orgInfo   Json?
   logo      String?
   users     User[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+  projects  Project[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now()) @updatedAt
+  Teams     Team[]
 }

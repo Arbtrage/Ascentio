@@ -91,6 +91,7 @@ export default function TeamDetails({ params }: { params: { id?: string } }) {
                 </Button>
                 <h1 className="text-4xl font-bold text-gray-800">{team.name}</h1>
                 <p className="text-xl text-gray-600 mt-2">{team.description}</p>
+
             </motion.div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -102,8 +103,58 @@ export default function TeamDetails({ params }: { params: { id?: string } }) {
                 >
                     <Card>
                         <CardHeader>
-                            <CardTitle>Team Members</CardTitle>
-                            <CardDescription>Manage your team members</CardDescription>
+                            <div className='flex flex-row justify-between items-center'>
+                                <div>
+                                    <CardTitle>Team Members</CardTitle>
+                                    <CardDescription>Manage your team members</CardDescription>
+                                </div>
+                                <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                                    <DialogTrigger asChild>
+                                        <Button >
+                                            <PlusIcon className="mr-2 h-4 w-4" />
+                                            Add Team Member
+                                        </Button>
+                                    </DialogTrigger>
+                                    <DialogContent className="sm:max-w-[425px]">
+                                        <DialogHeader>
+                                            <DialogTitle>Add Team Member</DialogTitle>
+                                            <DialogDescription>
+                                                Add a new member to your team. Click save when you&apos;re done.
+                                            </DialogDescription>
+                                        </DialogHeader>
+                                        <div className="grid gap-4 py-4">
+                                            <div className="grid grid-cols-4 items-center gap-4">
+                                                <Label htmlFor="name" className="text-right">
+                                                    Name
+                                                </Label>
+                                                <Input
+
+                                                    id="name"
+                                                    value={newMember.name || ''}
+                                                    onChange={(e) => setNewMember({ ...newMember, name: e.target.value })}
+                                                    className="col-span-3"
+                                                />
+                                            </div>
+                                            <div className="grid grid-cols-4 items-center gap-4">
+                                                <Label htmlFor="role" className="text-right">
+                                                    Role
+                                                </Label>
+                                                <Input
+                                                    id="role"
+                                                    value={newMember.role || ''}
+                                                    onChange={(e) => setNewMember({ ...newMember, role: e.target.value })}
+                                                    className="col-span-3"
+                                                />
+                                            </div>
+                                        </div>
+                                        <DialogFooter>
+                                            <Button type="submit" onClick={addMember}>Add Member</Button>
+                                        </DialogFooter>
+                                    </DialogContent>
+                                </Dialog>
+                            </div>
+
+
                         </CardHeader>
                         <CardContent>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -120,50 +171,6 @@ export default function TeamDetails({ params }: { params: { id?: string } }) {
                                     </div>
                                 ))}
                             </div>
-                            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-                                <DialogTrigger asChild>
-                                    <Button className="mt-4">
-                                        <PlusIcon className="mr-2 h-4 w-4" />
-                                        Add Team Member
-                                    </Button>
-                                </DialogTrigger>
-                                <DialogContent className="sm:max-w-[425px]">
-                                    <DialogHeader>
-                                        <DialogTitle>Add Team Member</DialogTitle>
-                                        <DialogDescription>
-                                            Add a new member to your team. Click save when you&apos;re done.
-                                        </DialogDescription>
-                                    </DialogHeader>
-                                    <div className="grid gap-4 py-4">
-                                        <div className="grid grid-cols-4 items-center gap-4">
-                                            <Label htmlFor="name" className="text-right">
-                                                Name
-                                            </Label>
-                                            <Input
-
-                                                id="name"
-                                                value={newMember.name || ''}
-                                                onChange={(e) => setNewMember({ ...newMember, name: e.target.value })}
-                                                className="col-span-3"
-                                            />
-                                        </div>
-                                        <div className="grid grid-cols-4 items-center gap-4">
-                                            <Label htmlFor="role" className="text-right">
-                                                Role
-                                            </Label>
-                                            <Input
-                                                id="role"
-                                                value={newMember.role || ''}
-                                                onChange={(e) => setNewMember({ ...newMember, role: e.target.value })}
-                                                className="col-span-3"
-                                            />
-                                        </div>
-                                    </div>
-                                    <DialogFooter>
-                                        <Button type="submit" onClick={addMember}>Add Member</Button>
-                                    </DialogFooter>
-                                </DialogContent>
-                            </Dialog>
                         </CardContent>
                     </Card>
                 </motion.div>

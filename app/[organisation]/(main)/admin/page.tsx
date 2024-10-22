@@ -10,7 +10,6 @@ import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell } from 'recharts'
 import { ArrowUpRight, ArrowDownRight, Users, Briefcase, TrendingUp, Activity, CheckCircle, XCircle, AlertCircle, Clock } from 'lucide-react'
 
-// Sample data (replace with real data in a production environment)
 const productivityData = [
     { name: 'Jan', value: 80 },
     { name: 'Feb', value: 75 },
